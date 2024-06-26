@@ -376,3 +376,11 @@ topologySpreadConstraints:
 {{ toYaml $.Values.podSpec.topologySpreadConstraints }}
     {{- end }}
 {{- end -}}
+
+{{- define "neo4j.serviceAccountName" -}}
+    {{- if and (kindIs "string" .Values.podSpec.serviceAccountName) .Values.podSpec.serviceAccountName -}}
+        {{ .Values.podSpec.serviceAccountName }}
+    {{- else -}}
+        {{ default (include "neo4j.fullname" .) .Values.serviceAccount.name }}
+    {{- end -}}
+{{- end -}}    
